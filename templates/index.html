@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top python questions</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+    }
+    body {
+      overflow: hidden;
+      height: 80vh;
+      display: flex;
+      flex-direction: column;
+      align-content: center;
+      justify-content: space-evenly;
+      background: linear-gradient(90deg,#306998, #FFD43B, #646464 );
+
+    }
+    .parent{
+      position: relative;
+      top:0;
+      right:0;
+    }
+    .container {
+      display:flex;
+      min-height: 300px;
+    }
+    .question{
+      line-height: 3em;
+      padding:0 30px 0 30px;
+      min-width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+    }
+    button{
+      width:250px;
+      height:80px;
+      overflow:hidden;
+      position: relative;
+      border:3px solid rgba(168, 168, 168, 0.575);
+      border-radius:10px;
+      font-size: 1.5em;
+      font-weight: 700;
+    }
+    button>p{
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+    }
+    .next:hover::before {
+      left:0%;
+      cursor: pointer;
+      background-color: #FFD43B;
+      transition: .5s;
+    }
+    .next:before {
+      content: "";
+      position: absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+    }
+    .prev:hover::before {
+      right:0%;
+      cursor: pointer;
+      background-color: #306998;
+      transition: .5s;
+    }
+    .prev:before {
+      content: "";
+      position: absolute;
+      top:0;
+      right:-100%;
+      width:100%;
+      height:100%;
+    }
+    a{
+      font-size:1.3em;
+      font-weight: 600;
+      text-decoration: none;
+      color:black;
+      animation: pulse 2s linear infinite;
+    }
+    a:visited{
+      text-decoration: none;
+      color:black;
+    }
+    @keyframes pulse {
+      50% {font-size: 1.5em;}
+      100% {font-size: 1.3em}
+    }
+  </style>
+</head>
+<body>
+  <h1>⭐ Python Hall of Fame ⭐</h1>
+  <div class = 'parent'> 
+    <div class = 'container'>
+      {% for sub, view, vote, link in data %}
+      <div class = 'question'>
+        <h1>{{sub}}</h1>
+        <p>{{view}}</p>
+        <p>{{vote}}</p>
+        <a href={link}>Jump to the topic</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div> 
+  <div>
+    <button class = 'prev'><p>Previous</p></button>
+    <button class = 'next'><p>Next</p></button>
+  </div>
+</body>
+<script>
+  const question = document.querySelector('.question');
+  const next = document.querySelector('.next');
+  const prev = document.querySelector('.prev');
+  const parent = document.querySelector('.parent');
+  const len = document.querySelectorAll('.question').length - 1
+  let questionWidth = question.getBoundingClientRect().width;
+  let currentDisplay = 0;
+  window.onresize = () => {
+    questionWidth = question.getBoundingClientRect().width
+  }
+  next.addEventListener('click', () => {
+    console.log(questionWidth);
+    currentDisplay = currentDisplay + questionWidth;
+    console.log(currentDisplay);
+    if (currentDisplay > questionWidth*49) {
+      currentDisplay = 0
+    }
+    parent.style.right = `${currentDisplay}px`;
+  })
+
+  prev.addEventListener('click', () => {
+    currentDisplay = currentDisplay - questionWidth;
+    console.log(currentDisplay);
+    if (currentDisplay < 0) {
+      currentDisplay = questionWidth*len
+    }
+    parent.style.right = `${currentDisplay}px`;
+  })
+
+</script>
+</html>
