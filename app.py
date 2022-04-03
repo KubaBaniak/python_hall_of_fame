@@ -21,7 +21,7 @@ def stackov():
     links.append("https://stackoverflow.com" + question.find('a', attrs = {'class' : 's-link'})['href'])
 
   data = list(zip(subjects, views, votes, links))
-  return render_template('index.html', data = data)
+  return render_template('python_hof.html', data = data)
   
 if __name__ == "__main__":
   app.run(host='127.0.0.1', port=5002, debug = True)
